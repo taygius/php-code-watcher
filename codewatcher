@@ -1,0 +1,29 @@
+#!/bin/bash
+# auto checking code formatting and notify about to ubuntu's notify-send
+
+PHPCS_STANDARD=Zend
+TMP_FILE=phpcs.err.tmp
+NOTIFY_ICON_SUCCESS=/usr/share/icons/oxygen/128x128/emotes/face-smile-big.png
+NOTIFY_ICON_ERROR=/usr/share/icons/oxygen/128x128/status/script-error.png
+NOTIFY_TIME=2000
+
+while true ; do
+    inotifywait -rq --format '%w%f' -e close_write $1 | \
+        while read file ; do
+            phpcs --standard=$PHPCS_STANDARD --report=csv $file > $TMP_FILE
+            ERR_COUNT=$(cat $TMP_FILE | wc -l)
+
+            if [ $ERR_COUNT = 1 ] ;then
+                notify-send $file "Your code so good" \
+                    -i $NOTIFY_ICON_SUCCESS \
+                    -t 900
+            else 
+                notify-send "`echo $file $(($ERR_COUNT-1))` error(s)" \
+                    "Ошибки:
+                        `tail -3 $TMP_FILE | awk -F',' '{print $2, $5}'`" \
+                    -i $NOTIFY_ICON_ERROR \
+                    -t $NOTIFY_TIME
+            fi
+            rm -f $TMP_FILE
+        done
+done
