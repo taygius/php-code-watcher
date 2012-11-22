@@ -19,7 +19,6 @@ Setup 'inotify-tools' for watching file changes
 sudo apt-get install inotify-tools
 sudo apt-get install php-codesniffer
 ```
-
 3)
 Setup patched notify-osd *optional
 ``` bash
@@ -29,23 +28,21 @@ sudo apt-get install libnotify-bin
 echo 'bubble-expire-timeout = 1sec' >> ~/.notify-osd
 ```
 
-## How to run
-
-* change PHPCS_STANDARD with needed
-* run 
-``` bash
-sh ./codewatcher /path/to/project
-```
-
 ## Options
 
 Also you can edit follow options in 'codewatcher.sh':
 
-PHPCS_STANDARD      - name or path to codesniffer's standart 
-TMP_FILE            - path to temp file
-NOTIFY_ICON_SUCCESS - path to success icon - 128x128 recommended
-NOTIFY_ICON_ERROR   - path to error icon - 128x128 recommended
-NOTIFY_TIME         - time of showing notify message, ms
+* PHPCS_STANDARD      - name or path to codesniffer's standart 
+* TMP_FILE            - path to temp file
+* NOTIFY_ICON_SUCCESS - path to success icon - 128x128 recommended
+* NOTIFY_ICON_ERROR   - path to error icon - 128x128 recommended
+* NOTIFY_TIME         - time of showing notify message, ms
+
+## How to run
+
+* change options if needed
+* run 
+``` sh ./codewatcher /path/to/project ```
 
 ## License
 
